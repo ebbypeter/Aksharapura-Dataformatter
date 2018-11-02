@@ -8,13 +8,15 @@ namespace Aksharapura.DataFormatter.App
         {
             Console.WriteLine("Hello World!");
 
-            var sourcePath = @"D:\OneDrive\Misc\Malayalam\Raw Data\Malayalam Dict #02.txt";
-            var testPath = @"D:\Dev\Aashan\TestDataT1.txt";
+            var sourceFile = @"D:\OneDrive\Misc\Malayalam\Raw Data\TestData.txt";
+            var targetFile_dictfmt = @"D:\OneDrive\Misc\Malayalam\Raw Data\TestData_temp_dictfmt.txt";
+            var targetFile_csv = @"D:\OneDrive\Misc\Malayalam\Raw Data\TestData_temp_csv.txt";
 
             var formatter = new DataFormatter();
-            formatter.LoadData(sourcePath)
-                .ParseAsDictfmt()                
-                .SaveAsCsv(testPath, "en", "ml");
+            formatter.LoadData(sourceFile)
+                .ParseAsDictfmt("test", "test desc", "en", "ml")
+                .SaveAsDictfmt(targetFile_dictfmt)
+                .SaveAsCsv(targetFile_csv, "en", "ml");
 
             Console.ReadKey();
         }
