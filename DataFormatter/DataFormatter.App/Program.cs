@@ -14,9 +14,11 @@ namespace Aksharapura.DataFormatter.App
 
             var formatter = new DataFormatter();
             formatter.LoadData(sourceFile)
-                .ParseAsDictfmt("test", "test desc", "en", "ml")
-                .SaveAsDictfmt(targetFile_dictfmt)
-                .SaveAsCsv(targetFile_csv, "en", "ml");
+                .ParseAsDictfmt("en", "ml", "test", "test desc")
+                //.TransformAsDictfmt();
+                .TransformAsCsv("en", "ml");
+                //.SaveAsDictfmt(targetFile_dictfmt)
+                //.SaveAsCsv(targetFile_csv, "en", "ml");
 
             Console.ReadKey();
         }

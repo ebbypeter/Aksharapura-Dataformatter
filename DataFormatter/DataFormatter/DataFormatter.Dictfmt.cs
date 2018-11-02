@@ -8,15 +8,18 @@ namespace Aksharapura.DataFormatter
 {
     public partial class DataFormatter
     {
-        public DataFormatter ParseAsDictfmt(string name, string desc, string sourceLang, string targetLang)
+        public DataFormatter ParseAsDictfmt(string sourceLang, string targetLang, string name = "", string desc = "")
         {
-            parsedDataset = new Dataset()
+            if (parsedDataset == null)
             {
-                Name = name,
-                Description = desc,
-                SourceItems = new List<DataItem>(),
-                TranslationItems = new List<DataItem>()
-            };
+                parsedDataset = new Dataset()
+                {
+                    Name = name,
+                    Description = desc,
+                    SourceItems = new List<DataItem>(),
+                    TranslationItems = new List<DataItem>()
+                };
+            }
 
             DataItem sourceDataItem = null;
             foreach (var line in sourceData)
@@ -53,6 +56,30 @@ namespace Aksharapura.DataFormatter
                 }
             }
 
+            return this;
+        }
+
+        public DataFormatter TransformAsDictfmt()
+        {
+            targetData = new List<string>();
+            targetData.Add($"Name : {parsedDataset.Name}");
+            targetData.Add(parsedDataset.Description);
+
+            foreach (var sourceItem in parsedDataset.SourceItems)
+            {
+                targetData.Add(sourceItem.Data);
+
+                var translatedItems = parsedDataset.TranslationItems
+                    .Where(item => item.Id.Equals(sourceItem.Id, StringComparison.InvariantCultureIgnoreCase))
+                    .ToList();
+
+                int count = 1;
+                foreach (var translatedItem in translatedItems)
+                {
+                    targetData.Add($"\t{count}. {translatedItem.Data}");
+                    count++;
+                }
+            }
             return this;
         }
 

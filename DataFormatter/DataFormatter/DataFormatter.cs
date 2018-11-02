@@ -9,6 +9,7 @@ namespace Aksharapura.DataFormatter
     {
         private List<string> sourceData;
         private Dataset parsedDataset;
+        private List<string> targetData;
 
         public DataFormatter LoadData(string fileUrl)
         {
